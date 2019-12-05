@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -25,7 +27,7 @@ class _DiceViewState extends State<DiceView> {
   static TextStyle textStyle = TextStyle(
       color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold);
   final options = [
-    Text('Home', style: textStyle),
+    DicePage(),
     Text('About', style: textStyle),
     Text(
       'Settings',
@@ -60,6 +62,57 @@ class _DiceViewState extends State<DiceView> {
             _selectedIndex = index;
           });
         },
+      ),
+    );
+  }
+}
+
+class DicePage extends StatefulWidget {
+  @override
+  _DicePageState createState() => _DicePageState();
+}
+
+class _DicePageState extends State<DicePage> {
+  int leftImageIndex = 1;
+  int rightImageIndex = 1;
+
+  changeImage() {
+    leftImageIndex = Random().nextInt(6) + 1;
+    rightImageIndex = Random().nextInt(6) + 1;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: FlatButton(
+              onPressed: () {
+                setState(() {
+                  changeImage();
+                });
+              },
+              child: Image.asset(
+                'images/dice$leftImageIndex.png',
+                color: Colors.white,
+              ),
+            ),
+          ),
+          Expanded(
+            child: FlatButton(
+              onPressed: () {
+                setState(() {
+                  changeImage();
+                });
+              },
+              child: Image.asset(
+                'images/dice$rightImageIndex.png',
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
